@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const authMiddlewares_1 = require("../../../middleware/authMiddlewares");
+const cars_controller_1 = require("./cars.controller");
+// import { createCar, getAllCars, getCarById, updateCar, deleteCar } from '../controllers/carController';
+// import { authenticate, authorize } from '../middleware/auth';
+const router = (0, express_1.Router)();
+router.post('/', authMiddlewares_1.authenticate, (0, authMiddlewares_1.authorize)(['admin']), cars_controller_1.createCar);
+router.get('/', cars_controller_1.getAllCars);
+router.get('/:id', cars_controller_1.getCarById);
+router.put('/:id', authMiddlewares_1.authenticate, (0, authMiddlewares_1.authorize)(['admin']), cars_controller_1.updateCar);
+router.delete('/:id', authMiddlewares_1.authenticate, (0, authMiddlewares_1.authorize)(['admin']), cars_controller_1.deleteCar);
+exports.default = router;
